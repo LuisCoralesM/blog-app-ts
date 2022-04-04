@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dir/index.js",
+    "ts-start": "npx ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -19,11 +22,15 @@
   "prisma.schema": "./src/db/schema.prisma",
   "dependencies": {
     "@prisma/client": "^3.11.1",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "pg": "^7.12.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.1",
     "@types/node": "^17.0.23",
+    "@types/pg": "^8.6.5",
+    "axios": "^0.26.1",
     "prisma": "^3.11.1"
   }
 }

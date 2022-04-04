@@ -1,83 +1,103 @@
 import { Request, Response, NextFunction } from 'express';
+import { PrismaClient } from '@prisma/client';
+import { User } from '../models/user';
+
+const prisma = new PrismaClient();
 
 /** To GET doctors route */
-export async function getAll(req: Request, res: Response) {
+async function getAllUser(req: Request, res: Response) {
     try{
-        const result = await User.findAll({
-            
-        });
-
+        const result: User[] = await prisma.user.findMany();
         return res.status(200).json({
             result
         });
     } catch(e) {
+        console.log(e);
         return res.sendStatus(500);
     }
 }
 
 /** To POST doctors route */
-export async function post(req: Request, res: Response) {
+async function postUser(req: Request, res: Response) {
     try{    
-        const result = await User.create({
-            username: req.body.username,
-            email: req.body.email,
-            birth_date: req.body.birth_date
-        });
-
+        const result: User = await prisma.user.create({
+            data: {
+                username: req.body.username,
+                email: req.body.email,
+                birth_date: new Date(req.body.birth_date),
+                deleted: false
+        }});
         return res.status(200).json({
             result
         });
     } catch(e) {
+        console.log(e);
         return res.sendStatus(500);
     }
 }
 
 /** To GET doctor by id route */
-export async function getOne(req: Request, res: Response) {
-    try{
-        const result = await User.findByPk(req.params.id, {
-            
+async function getOneUser(req: Request, res: Response) {
+    try{    
+        const result: User | null = await prisma.user.findUnique({
+            where: {
+                id: Number(req.params.id)
+            }
         });
-
         return res.status(200).json({
             result
         });
     } catch(e) {
+        console.log(e);
         return res.sendStatus(500);
     }
 }
 
 /** To PUT doctors route */
-module.exports.put = async (req: Request, res: Response) => {
+async function putUser(req: Request, res: Response) {
     try{
-        const result = await Doctor.update({
-            username: req.body.username,
-            email: req.body.email
-        }, {
+        const result = await prisma.user.update({
             where: {
-                id: req.params.id
+                id: Number(req.params.id)
+            },
+            data: {
+                username: req.body.username,
+                email: req.body.email
             }
         });
-
-        return res.sendStatus(200);
+        return res.status(200).json({
+            result
+        });
     } catch(e) {
+        console.log(e);
         return res.sendStatus(500);
     }
 }
 
 /** To DELETE doctors route */
-module.exports.delete = async (req: Request, res: Response) => {
+async function deleteUser(req: Request, res: Response) {
     try{
-        const result = await User.destroy({
+        const result = await prisma.user.update({
             where: {
-                id: req.params.id
+                id: Number(req.params.id)
+            },
+            data: {
+                deleted: true
             }
         });
-
         return res.status(200).json({
             result
         });
     } catch(e) {
+        console.log(e);
         return res.sendStatus(500);
     }
+}
+
+export {
+    getAllUser,
+    getOneUser,
+    deleteUser,
+    putUser,
+    postUser
 }
