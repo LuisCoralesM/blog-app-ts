@@ -7,7 +7,7 @@ import express from "express";
 
 import { Request, Response, NextFunction } from 'express';
 
-import router from "./routes/index";
+import router from "./routes";
 
 // Set app and port
 const app = express();

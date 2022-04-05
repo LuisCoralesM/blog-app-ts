@@ -7,7 +7,17 @@ const prisma = new PrismaClient();
 /** To GET posts route */
 async function getAllPost(req: Request, res: Response) {
     try{
-        const result = await prisma.post.findMany();
+        const result = await prisma.post.findMany({
+            include: {
+                profile: {
+                    include: {
+                        user: {
+                            select: { username: true}
+                        }
+                    }
+                }
+            }
+        });
         return res.status(200).json({
             result
         });
@@ -24,8 +34,11 @@ async function postPost(req: Request, res: Response) {
             data: {
                 title: req.body.title,
                 content: req.body.content,
-                user: {connect: {email: req.body.email}}
-        }});
+                profile: {
+                    connect: { user_id: req.body.user_id }
+                }
+            }
+        });
         return res.status(200).json({
             result
         });
