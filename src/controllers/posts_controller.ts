@@ -19,7 +19,7 @@ async function getAllPost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            post: result
         });
     } catch(e) {
         console.log(e);
@@ -40,7 +40,7 @@ async function postPost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            post: result
         });
     } catch(e) {
         console.log(e);
@@ -57,7 +57,7 @@ async function getOnePost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            post: result
         });
     } catch(e) {
         console.log(e);
@@ -78,7 +78,7 @@ async function putPost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            post: result
         });
     } catch(e) {
         console.log(e);
@@ -95,7 +95,7 @@ async function deletePost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            post: result
         });
     } catch(e) {
         console.log(e);

@@ -7,9 +7,18 @@ const prisma = new PrismaClient();
 /** To GET users route */
 async function getAllUser(req: Request, res: Response) {
     try{
-        const result = await prisma.user.findMany();
+        const result = await prisma.user.findMany({
+            include: {
+                profile: {
+                    select: {
+                        id: true,
+                        bio: true
+                    }
+                }
+            }
+        });
         return res.status(200).json({
-            result
+            user: result
         });
     } catch(e) {
         console.log(e);
@@ -63,10 +72,18 @@ async function getOneUser(req: Request, res: Response) {
         const result = await prisma.user.findUnique({
             where: {
                 id: Number(req.params.id)
+            },
+            include: {
+                profile: {
+                    select: {
+                        id: true,
+                        bio: true
+                    }
+                }
             }
         });
         return res.status(200).json({
-            result
+            user: result
         });
     } catch(e) {
         console.log(e);
@@ -108,8 +125,17 @@ async function deleteUser(req: Request, res: Response) {
                 deleted_at: new Date()
             }
         });
+
+        const profile = await prisma.profile.update({
+            where: {
+                id: Number(req.params.id)
+            },
+            data: {
+                deleted_at: new Date()
+            }
+        });
         return res.status(200).json({
-            result
+            user: result, profile: profile
         });
     } catch(e) {
         console.log(e);

@@ -18,7 +18,7 @@ async function getAllProfile(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            profile: result
         });
     } catch(e) {
         console.log(e);
@@ -60,7 +60,7 @@ async function getOneProfile(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            profile: result
         });
     } catch(e) {
         console.log(e);
@@ -80,7 +80,7 @@ async function putProfile(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            result
+            profile: result
         });
     } catch(e) {
         console.log(e);
