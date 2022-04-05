@@ -4,5 +4,16 @@ export interface User {
     email:       string,
     birth_date:  Date
     updated_at:  Date,
-    deleted:     Boolean
+    deleted_at:     Boolean
+    posts:       Post[]
+}
+
+export interface Post {
+    id:          number,
+    user:        User,
+    userId:      number
+    title:       string,
+    content:     string,
+    score:       number,
+    created_at:  Date
 }

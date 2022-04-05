@@ -1,16 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { User, Post } from '../models/user';
+import { Post } from '../models/user';
 
 const prisma = new PrismaClient();
 
-/** To GET users route */
-async function getAllUser(req: Request, res: Response) {
+/** To GET posts route */
+async function getAllPost(req: Request, res: Response) {
     try{
-        const result = await prisma.user.findMany({
-            include: {
-                posts: true,
-            }});
+        const result = await prisma.post.findMany();
         return res.status(200).json({
             result
         });
@@ -20,14 +17,14 @@ async function getAllUser(req: Request, res: Response) {
     }
 }
 
-/** To POST users route */
-async function postUser(req: Request, res: Response) {
+/** To POST posts route */
+async function postPost(req: Request, res: Response) {
     try{    
-        const result = await prisma.user.create({
+        const result = await prisma.post.create({
             data: {
-                username: req.body.username,
-                email: req.body.email,
-                birth_date: new Date(req.body.birth_date)
+                title: req.body.title,
+                content: req.body.content,
+                score: 0
         }});
         return res.status(200).json({
             result
@@ -38,10 +35,10 @@ async function postUser(req: Request, res: Response) {
     }
 }
 
-/** To GET users by id route */
-async function getOneUser(req: Request, res: Response) {
+/** To GET posts by id route */
+async function getOnePost(req: Request, res: Response) {
     try{    
-        const result = await prisma.user.findUnique({
+        const result = await prisma.post.findUnique({
             where: {
                 id: Number(req.params.id)
             }
@@ -55,16 +52,16 @@ async function getOneUser(req: Request, res: Response) {
     }
 }
 
-/** To PUT users route */
-async function putUser(req: Request, res: Response) {
+/** To PUT posts route */
+async function putPost(req: Request, res: Response) {
     try{
-        const result = await prisma.user.update({
+        const result = await prisma.post.update({
             where: {
                 id: Number(req.params.id)
             },
             data: {
-                username: req.body.username,
-                email: req.body.email
+                title: req.body.title,
+                content: req.body.content
             }
         });
         return res.status(200).json({
@@ -76,15 +73,12 @@ async function putUser(req: Request, res: Response) {
     }
 }
 
-/** To DELETE users route */
-async function deleteUser(req: Request, res: Response) {
+/** To DELETE posts route */
+async function deletePost(req: Request, res: Response) {
     try{
-        const result = await prisma.user.update({
+        const result = await prisma.post.delete({
             where: {
                 id: Number(req.params.id)
-            },
-            data: {
-                deleted_at: new Date()
             }
         });
         return res.status(200).json({
@@ -97,9 +91,9 @@ async function deleteUser(req: Request, res: Response) {
 }
 
 export {
-    getAllUser,
-    getOneUser,
-    deleteUser,
-    putUser,
-    postUser
+    getAllPost,
+    getOnePost,
+    deletePost,
+    postPost,
+    putPost
 }

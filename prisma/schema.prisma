@@ -16,5 +16,16 @@ model User {
     email       String      @unique
     birth_date  DateTime
     updated_at  DateTime    @updatedAt
-    deleted     Boolean
+    deleted_at  DateTime?   
+    posts       Post[]
+}
+
+model Post {
+    id          Int         @id @default(autoincrement())
+    title       String      
+    content     String      
+    user        User?       @relation(fields: [userId], references: [id])
+    userId      Int?
+    score       Int         @default(0)
+    created_at  DateTime    @default(now())
 }
