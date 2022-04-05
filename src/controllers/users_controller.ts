@@ -10,7 +10,8 @@ async function getAllUser(req: Request, res: Response) {
         const result = await prisma.user.findMany({
             include: {
                 posts: true,
-            }});
+            }}
+        );
         return res.status(200).json({
             result
         });

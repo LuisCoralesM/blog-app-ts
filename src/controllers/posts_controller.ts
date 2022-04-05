@@ -24,7 +24,7 @@ async function postPost(req: Request, res: Response) {
             data: {
                 title: req.body.title,
                 content: req.body.content,
-                score: 0
+                user: {connect: {email: req.body.email}}
         }});
         return res.status(200).json({
             result
