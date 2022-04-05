@@ -9,17 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postUser = exports.putUser = exports.deleteUser = exports.getOneUser = exports.getAllUser = void 0;
+exports.putPost = exports.postPost = exports.deletePost = exports.getOnePost = exports.getAllPost = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-function getAllUser(req, res) {
+function getAllPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.user.findMany({
-                include: {
-                    posts: true,
-                }
-            });
+            const result = yield prisma.post.findMany();
             return res.status(200).json({
                 result
             });
@@ -30,15 +26,15 @@ function getAllUser(req, res) {
         }
     });
 }
-exports.getAllUser = getAllUser;
-function postUser(req, res) {
+exports.getAllPost = getAllPost;
+function postPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.user.create({
+            const result = yield prisma.post.create({
                 data: {
-                    username: req.body.username,
-                    email: req.body.email,
-                    birth_date: new Date(req.body.birth_date)
+                    title: req.body.title,
+                    content: req.body.content,
+                    user: { connect: { email: req.body.email } }
                 }
             });
             return res.status(200).json({
@@ -51,11 +47,11 @@ function postUser(req, res) {
         }
     });
 }
-exports.postUser = postUser;
-function getOneUser(req, res) {
+exports.postPost = postPost;
+function getOnePost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.user.findUnique({
+            const result = yield prisma.post.findUnique({
                 where: {
                     id: Number(req.params.id)
                 }
@@ -70,17 +66,17 @@ function getOneUser(req, res) {
         }
     });
 }
-exports.getOneUser = getOneUser;
-function putUser(req, res) {
+exports.getOnePost = getOnePost;
+function putPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.user.update({
+            const result = yield prisma.post.update({
                 where: {
                     id: Number(req.params.id)
                 },
                 data: {
-                    username: req.body.username,
-                    email: req.body.email
+                    title: req.body.title,
+                    content: req.body.content
                 }
             });
             return res.status(200).json({
@@ -93,16 +89,13 @@ function putUser(req, res) {
         }
     });
 }
-exports.putUser = putUser;
-function deleteUser(req, res) {
+exports.putPost = putPost;
+function deletePost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.user.update({
+            const result = yield prisma.post.delete({
                 where: {
                     id: Number(req.params.id)
-                },
-                data: {
-                    deleted_at: new Date()
                 }
             });
             return res.status(200).json({
@@ -115,4 +108,4 @@ function deleteUser(req, res) {
         }
     });
 }
-exports.deleteUser = deleteUser;
+exports.deletePost = deletePost;
