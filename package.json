@@ -7,6 +7,7 @@
     "start": "node dir/index.js",
     "ts-start": "npx ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx prisma migrate dev",
     "dev": "nodemon src/index.ts"
   },
   "repository": {
