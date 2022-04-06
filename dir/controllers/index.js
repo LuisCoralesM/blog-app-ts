@@ -23,8 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.posts_controller = exports.users_controller = void 0;
+exports.auth_controller = exports.profiles_controller = exports.posts_controller = exports.users_controller = void 0;
 const users_controller = __importStar(require("./users_controller"));
 exports.users_controller = users_controller;
 const posts_controller = __importStar(require("./posts_controller"));
 exports.posts_controller = posts_controller;
+const profiles_controller = __importStar(require("./profiles_controller"));
+exports.profiles_controller = profiles_controller;
+const auth_controller = __importStar(require("./auth_controller"));
+exports.auth_controller = auth_controller;

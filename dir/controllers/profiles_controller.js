@@ -9,24 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getOneUser = exports.getAllUser = void 0;
+exports.putProfile = exports.getOneProfile = exports.getAllProfile = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-function getAllUser(req, res) {
+function getAllProfile(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield prisma.user.findMany({
+            const result = yield prisma.profile.findMany({
                 include: {
-                    profile: {
+                    user: {
                         select: {
-                            id: true,
-                            bio: true
+                            created_at: true
                         }
-                    }
+                    },
+                    posts: true,
                 }
             });
             return res.status(200).json({
-                user
+                profile: result
             });
         }
         catch (e) {
@@ -35,25 +35,25 @@ function getAllUser(req, res) {
         }
     });
 }
-exports.getAllUser = getAllUser;
-function getOneUser(req, res) {
+exports.getAllProfile = getAllProfile;
+function getOneProfile(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield prisma.user.findUnique({
+            const result = yield prisma.profile.findUnique({
                 where: {
                     id: Number(req.params.id)
                 },
                 include: {
-                    profile: {
+                    user: {
                         select: {
-                            id: true,
-                            bio: true
+                            created_at: true
                         }
-                    }
+                    },
+                    posts: true,
                 }
             });
             return res.status(200).json({
-                user
+                profile: result
             });
         }
         catch (e) {
@@ -62,28 +62,20 @@ function getOneUser(req, res) {
         }
     });
 }
-exports.getOneUser = getOneUser;
-function deleteUser(req, res) {
+exports.getOneProfile = getOneProfile;
+function putProfile(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield prisma.user.update({
+            const result = yield prisma.profile.update({
                 where: {
                     id: Number(req.params.id)
                 },
                 data: {
-                    deleted_at: new Date()
-                }
-            });
-            const profile = yield prisma.profile.update({
-                where: {
-                    id: Number(req.params.id)
-                },
-                data: {
-                    deleted_at: new Date()
+                    bio: req.body.bio
                 }
             });
             return res.status(200).json({
-                user, profile
+                profile: result
             });
         }
         catch (e) {
@@ -92,4 +84,4 @@ function deleteUser(req, res) {
         }
     });
 }
-exports.deleteUser = deleteUser;
+exports.putProfile = putProfile;

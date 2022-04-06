@@ -6,58 +6,13 @@ const prisma = new PrismaClient();
 /** To GET users route */
 async function getAllUser(req: Request, res: Response) {
     try{
-        const result = await prisma.user.findMany({
+        const user = await prisma.user.findMany({
             include: {
-                profile: {
-                    select: {
-                        id: true,
-                        bio: true
-                    }
-                }
+                profile: true
             }
         });
         return res.status(200).json({
-            user: result
-        });
-    } catch(e) {
-        console.log(e);
-        return res.sendStatus(500);
-    }
-}
-
-/** To POST users route */
-async function postUser(req: Request, res: Response) {
-    try{    
-        const data = await prisma.user.create({
-            data: {
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password,
-                profile: {
-                    create: {
-                        bio: ""
-                    }
-                }
-            }
-        });
-
-        const profile = await prisma.profile.create({
-            data: {
-                user: { connect: { id: data.id } }
-            }
-        });
-
-        const result = await prisma.user.update({
-            where: {
-                id: data.id
-            },
-            data: {
-                profile_id: profile.id
-            }
-        })
-
-        return res.status(200).json({
-            user: result, profile: profile
+            user
         });
     } catch(e) {
         console.log(e);
@@ -68,21 +23,16 @@ async function postUser(req: Request, res: Response) {
 /** To GET users by id route */
 async function getOneUser(req: Request, res: Response) {
     try{    
-        const result = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
                 id: Number(req.params.id)
             },
             include: {
-                profile: {
-                    select: {
-                        id: true,
-                        bio: true
-                    }
-                }
+                profile: true
             }
         });
         return res.status(200).json({
-            user: result
+            user
         });
     } catch(e) {
         console.log(e);
@@ -90,33 +40,10 @@ async function getOneUser(req: Request, res: Response) {
     }
 }
 
-
-// // Cant update anything manually
-// /** To PUT users route */
-// async function putUser(req: Request, res: Response) {
-//     try{
-//         const result = await prisma.user.update({
-//             where: {
-//                 id: Number(req.params.id)
-//             },
-//             data: {
-//                 username: req.body.username,
-//                 email: req.body.email
-//             }
-//         });
-//         return res.status(200).json({
-//             result
-//         });
-//     } catch(e) {
-//         console.log(e);
-//         return res.sendStatus(500);
-//     }
-// }
-
 /** To DELETE users route */
 async function deleteUser(req: Request, res: Response) {
     try{
-        const result = await prisma.user.update({
+        const user = await prisma.user.update({
             where: {
                 id: Number(req.params.id)
             },
@@ -134,7 +61,7 @@ async function deleteUser(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            user: result, profile: profile
+            user, profile
         });
     } catch(e) {
         console.log(e);
@@ -145,6 +72,5 @@ async function deleteUser(req: Request, res: Response) {
 export {
     getAllUser,
     getOneUser,
-    deleteUser,
-    postUser
+    deleteUser
 }
