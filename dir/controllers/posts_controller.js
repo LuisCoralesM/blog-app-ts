@@ -15,9 +15,19 @@ const prisma = new client_1.PrismaClient();
 function getAllPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield prisma.post.findMany();
+            const result = yield prisma.post.findMany({
+                include: {
+                    profile: {
+                        include: {
+                            user: {
+                                select: { username: true }
+                            }
+                        }
+                    }
+                }
+            });
             return res.status(200).json({
-                result
+                post: result
             });
         }
         catch (e) {
@@ -34,11 +44,13 @@ function postPost(req, res) {
                 data: {
                     title: req.body.title,
                     content: req.body.content,
-                    user: { connect: { email: req.body.email } }
+                    profile: {
+                        connect: { user_id: req.body.user_id }
+                    }
                 }
             });
             return res.status(200).json({
-                result
+                post: result
             });
         }
         catch (e) {
@@ -57,7 +69,7 @@ function getOnePost(req, res) {
                 }
             });
             return res.status(200).json({
-                result
+                post: result
             });
         }
         catch (e) {
@@ -80,7 +92,7 @@ function putPost(req, res) {
                 }
             });
             return res.status(200).json({
-                result
+                post: result
             });
         }
         catch (e) {
@@ -99,7 +111,7 @@ function deletePost(req, res) {
                 }
             });
             return res.status(200).json({
-                result
+                post: result
             });
         }
         catch (e) {
