@@ -18,7 +18,7 @@ async function getAllPost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            post: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -28,18 +28,18 @@ async function getAllPost(req: Request, res: Response) {
 
 /** To POST posts route */
 async function postPost(req: Request, res: Response) {
-    try{    
+    try {
         const result = await prisma.post.create({
             data: {
                 title: req.body.title,
                 content: req.body.content,
                 profile: {
-                    connect: { user_id: req.body.user_id }
+                    connect: { id: req.body.user.profile_id }
                 }
             }
         });
         return res.status(200).json({
-            post: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -56,7 +56,7 @@ async function getOnePost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            post: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -77,7 +77,7 @@ async function putPost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            post: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -94,7 +94,7 @@ async function deletePost(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            post: result
+            data: result
         });
     } catch(e) {
         console.log(e);

@@ -17,7 +17,7 @@ async function getAllProfile(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            profile: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -25,22 +25,30 @@ async function getAllProfile(req: Request, res: Response) {
     }
 }
 
-// // Create profile as soon as an user is created
-// /** To POST profiles route */
-// async function postUser(req: Request, res: Response) {
-//     try{    
-//         const result = await prisma.profile.create({
-//             data: {
-//                 birth_date: new Date(req.body.birth_date)
-//         }});
-//         return res.status(200).json({
-//             result
-//         });
-//     } catch(e) {
-//         console.log(e);
-//         return res.sendStatus(500);
-//     }
-// }
+/** To GET own profile */
+async function getOwnProfile(req: Request, res: Response) {
+    try{    
+        const result = await prisma.profile.findFirst({
+            where: {
+                id: Number(req.body.user.profile_id)
+            },
+            include: {
+                user: {
+                    select: {
+                        created_at: true
+                    }
+                },
+                posts: true,
+            }
+        });
+        return res.status(200).json({
+            data: result
+        });
+    } catch(e) {
+        console.log(e);
+        return res.sendStatus(500);
+    }
+}
 
 /** To GET profiles by id route */
 async function getOneProfile(req: Request, res: Response) {
@@ -59,7 +67,7 @@ async function getOneProfile(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            profile: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -72,14 +80,14 @@ async function putProfile(req: Request, res: Response) {
     try{
         const result = await prisma.profile.update({
             where: {
-                id: Number(req.params.id)
+                id: Number(req.body.user.profile_id)
             },
             data: {
                 bio: req.body.bio
             }
         });
         return res.status(200).json({
-            profile: result
+            data: result
         });
     } catch(e) {
         console.log(e);
@@ -87,29 +95,9 @@ async function putProfile(req: Request, res: Response) {
     }
 }
 
-// // Only delete if user is deleted
-// /** To DELETE profiles route */
-// async function deleteProfile(req: Request, res: Response) {
-//     try{
-//         const result = await prisma.profile.update({
-//             where: {
-//                 id: Number(req.params.id)
-//             },
-//             data: {
-//                 deleted_at: new Date()
-//             }
-//         });
-//         return res.status(200).json({
-//             result
-//         });
-//     } catch(e) {
-//         console.log(e);
-//         return res.sendStatus(500);
-//     }
-// }
-
 export {
     getAllProfile,
     getOneProfile,
+    getOwnProfile,
     putProfile
 }

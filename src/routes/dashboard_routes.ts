@@ -6,11 +6,12 @@ const router = Router();
 // Users routes TESTING ONLY
 router.get("/users/:id", users_controller.getOneUser);
 router.get("/users", users_controller.getAllUser);
-router.delete("/users/:id", users_controller.deleteUser);
+router.delete("/users/", users_controller.deleteUser);
 
 // Profiles routes
+router.get("/profiles/all", profiles_controller.getAllProfile);
 router.get("/profiles/:id", profiles_controller.getOneProfile);
-router.get("/profiles", profiles_controller.getAllProfile);
+router.get("/profiles", profiles_controller.getOwnProfile)
 router.put("/profiles/:id", profiles_controller.putProfile);
 
 // Posts routes

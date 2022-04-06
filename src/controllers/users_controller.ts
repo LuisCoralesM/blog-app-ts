@@ -12,7 +12,7 @@ async function getAllUser(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            user
+            data: user
         });
     } catch(e) {
         console.log(e);
@@ -32,7 +32,7 @@ async function getOneUser(req: Request, res: Response) {
             }
         });
         return res.status(200).json({
-            user
+            data: user
         });
     } catch(e) {
         console.log(e);
@@ -45,7 +45,7 @@ async function deleteUser(req: Request, res: Response) {
     try{
         const user = await prisma.user.update({
             where: {
-                id: Number(req.params.id)
+                id: Number(req.body.user.id)
             },
             data: {
                 deleted_at: new Date()
@@ -54,14 +54,14 @@ async function deleteUser(req: Request, res: Response) {
 
         const profile = await prisma.profile.update({
             where: {
-                id: Number(req.params.id)
+                id: Number(req.body.user.profile_id)
             },
             data: {
                 deleted_at: new Date()
             }
         });
         return res.status(200).json({
-            user, profile
+            data: {user, profile}
         });
     } catch(e) {
         console.log(e);

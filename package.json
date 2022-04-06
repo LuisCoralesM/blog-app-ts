@@ -8,6 +8,7 @@
     "ts-start": "npx ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx prisma migrate dev",
+    "migres": "npx prisma migrate reset",
     "dev": "nodemon src/index.ts"
   },
   "repository": {
@@ -21,6 +22,9 @@
   },
   "homepage": "https://github.com/LuisCoralesM/blog-app-ts#readme",
   "prisma.schema": "./src/db/schema.prisma",
+  "prisma":{
+    "seed": "npx ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^3.11.1",
     "argon2": "^0.28.5",
