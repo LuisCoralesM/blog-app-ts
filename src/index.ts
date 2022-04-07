@@ -3,9 +3,7 @@
  * npm run ts-start
  */
 
-import express from "express";
-
-import { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 import router from "./routes";
 
