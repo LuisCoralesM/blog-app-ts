@@ -1,17 +1,23 @@
 const users = [
     {
+        first_name: "A",
+        last_name: "Corales",
         username: "luis",
         email: "luis@email.com",
         password: "123",
         profile_id: 1
     },
     {
+        first_name: "B",
+        last_name: "Ramirez",
         username: "diego",
         email: "diego@email.com",
         password: "456",
         profile_id: 2
     },
     {
+        first_name: "E",
+        last_name: "gonzalez",
         username: "manuel",
         email: "manuel@email.com",
         password: "789",

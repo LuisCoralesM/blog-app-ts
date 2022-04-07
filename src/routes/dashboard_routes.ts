@@ -4,6 +4,9 @@ import { users_controller, posts_controller, profiles_controller } from "../cont
 const router = Router();
 
 // Users routes TESTING ONLY
+router.get("/users/alpha", users_controller.getByAlphaName);
+router.get("/users/abc", users_controller.getABCUsers);
+router.get("/users/abccount", users_controller.getABCCountUser);
 router.get("/users/:id", users_controller.getOneUser);
 router.get("/users", users_controller.getAllUser);
 router.delete("/users/", users_controller.deleteUser);

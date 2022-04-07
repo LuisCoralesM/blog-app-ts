@@ -24,6 +24,16 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:5500/auth/register/
+Content-Type: application/json
+
+{
+    "username": "diego",
+    "password": "456"
+}
+
+###
+
 POST http://localhost:5500/dashboard/posts/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJkaWVnbyIsImVtYWlsIjoiZGllZ29AZW1haWwuY29tIiwicGFzc3dvcmQiOiI0NTYiLCJwcm9maWxlX2lkIjoyLCJjcmVhdGVkX2F0IjoiMjAyMi0wNC0wNlQxOTo1NToyMi43MjJaIiwiZGVsZXRlZF9hdCI6bnVsbCwiaWF0IjoxNjQ5Mjc1OTgwfQ.DkLDM4qgmvH5ahiqTATVCRVIIappEfgpZIjC762RN_c
 Content-Type: application/json
@@ -36,10 +46,5 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5500/dashboard/profiles/all
+GET http://localhost:5500/dashboard/users/alpha
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJsdWlzIiwiZW1haWwiOiJsdWlzQGVtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzIiwicHJvZmlsZV9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjItMDQtMDZUMTk6NTU6MjIuNzA5WiIsImRlbGV0ZWRfYXQiOm51bGwsImlhdCI6MTY0OTI3NTMyMX0.FzyfOKycb-zfwTFHwJ3FZ0hO9mMO1fOhHSQI_FmVMfA
-Content-Type: application/json
-
-{
-
-}
