@@ -46,5 +46,5 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5500/dashboard/users/alpha
+GET http://localhost:5500/dashboard/users/abccount
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJsdWlzIiwiZW1haWwiOiJsdWlzQGVtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzIiwicHJvZmlsZV9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjItMDQtMDZUMTk6NTU6MjIuNzA5WiIsImRlbGV0ZWRfYXQiOm51bGwsImlhdCI6MTY0OTI3NTMyMX0.FzyfOKycb-zfwTFHwJ3FZ0hO9mMO1fOhHSQI_FmVMfA
