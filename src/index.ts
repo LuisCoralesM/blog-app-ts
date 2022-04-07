@@ -1,6 +1,6 @@
 /**
  * npx ts-node src/index.ts
- * npm run ts-start
+ * npm start
  */
 
 import express, { Request, Response, NextFunction } from 'express';
@@ -24,18 +24,15 @@ app.get("/status", async (req: Request, res: Response) => {
     try {
         const count = await prisma.user.count();
         return res.status(200).json({count});
-
     } catch (error) {
         return res.json({message: error})
     }
-
 });
 
 // If not fitting route was found, send error
 app.use((req: Request, res: Response) => {
     return res.sendStatus(404);
 });
-
 
 // Run app
 app.listen(port, () => {
