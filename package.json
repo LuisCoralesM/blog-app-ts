@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dir/index.js",
-    "ts-start": "npx ts-node src/index.ts",
+    "start": "npx ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx prisma migrate dev",
     "migres": "npx prisma migrate reset",
