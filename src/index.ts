@@ -11,7 +11,7 @@ import router from "./routes";
 
 // Set app and port
 const app = express();
-const port = 5500;
+const port = process.env.PORT || 5500;
 
 // Use json
 app.use(express.json());
