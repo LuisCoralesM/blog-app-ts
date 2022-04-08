@@ -5,6 +5,7 @@
 
 import express, { Request, Response, NextFunction } from 'express';
 import {PrismaClient} from "@prisma/client";
+import cors from 'cors';
 
 const prisma = new PrismaClient();
 
@@ -14,11 +15,10 @@ import router from "./routes";
 const app = express();
 const port = process.env.PORT || 5500;
 
+app.use(cors());
+
 // Use json
 app.use(express.json());
-
-// Routes
-app.use("/", router);
 
 app.get("/status", async (req: Request, res: Response) => {
     try {
@@ -28,6 +28,11 @@ app.get("/status", async (req: Request, res: Response) => {
         return res.json({message: error})
     }
 });
+
+// Routes
+app.use("/", router);
+
+
 
 // If not fitting route was found, send error
 app.use((req: Request, res: Response) => {
