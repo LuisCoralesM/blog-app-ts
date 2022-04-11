@@ -32,7 +32,7 @@ async function getOneUser(req: Request, res: Response) {
             include: {
                 profile: true
             }
-        });
+        });        
         return res.status(200).json({
             data: user
         });

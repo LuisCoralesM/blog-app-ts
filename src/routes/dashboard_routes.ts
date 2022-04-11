@@ -9,7 +9,7 @@ router.get("/users/abc", users_controller.getABCUsers);
 router.get("/users/abccount", users_controller.getABCCountUser);
 router.get("/users/:id", users_controller.getOneUser);
 router.get("/users", users_controller.getAllUser);
-router.delete("/users/", users_controller.deleteUser);
+router.delete("/users/", users_controller.deleteUser); // Delete by current user id
 
 // Profiles routes
 router.get("/profiles/all", profiles_controller.getAllProfile);
