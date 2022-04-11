@@ -32,8 +32,6 @@ app.get("/status", async (req: Request, res: Response) => {
 // Routes
 app.use("/", router);
 
-
-
 // If not fitting route was found, send error
 app.use((req: Request, res: Response) => {
     return res.sendStatus(404);
