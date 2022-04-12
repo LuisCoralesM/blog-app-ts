@@ -10,7 +10,8 @@ async function getAllProfile(req: Request, res: Response) {
             include: {
                 user: {
                     select: {
-                        created_at: true
+                        created_at: true,
+                        username: true
                     }
                 },
                 posts: true,
@@ -35,7 +36,8 @@ async function getOwnProfile(req: Request, res: Response) {
             include: {
                 user: {
                     select: {
-                        created_at: true
+                        created_at: true,
+                        username: true
                     }
                 },
                 posts: true,
@@ -60,7 +62,8 @@ async function getOneProfile(req: Request, res: Response) {
             include: {
                 user: {
                     select: {
-                        created_at: true
+                        created_at: true,
+                        username: true
                     }
                 },
                 posts: true,

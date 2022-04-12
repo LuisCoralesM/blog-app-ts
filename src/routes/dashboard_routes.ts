@@ -7,15 +7,18 @@ const router = Router();
 router.get("/users/alpha", users_controller.getByAlphaName);
 router.get("/users/abc", users_controller.getABCUsers);
 router.get("/users/abccount", users_controller.getABCCountUser);
-router.get("/users/:id", users_controller.getOneUser);
-router.get("/users", users_controller.getAllUser);
-router.delete("/users/", users_controller.deleteUser); // Delete by current user id
+
+router.get("/users/all", users_controller.getAllUser); // Admin
+router.get("/users/:id", users_controller.getOneUser); // Admin
+router.get("/users/", users_controller.getOwnUser); // Anyone
+router.delete("/users/:id", users_controller.deleteOneUser); // Admin only
+router.delete("/users/", users_controller.deleteOwnUser); // Delete by current user id
 
 // Profiles routes
 router.get("/profiles/all", profiles_controller.getAllProfile);
 router.get("/profiles/:id", profiles_controller.getOneProfile);
 router.get("/profiles", profiles_controller.getOwnProfile)
-router.put("/profiles/:id", profiles_controller.putProfile);
+router.put("/profiles/", profiles_controller.putProfile); // Own profile
 
 // Posts routes
 router.get("/posts/:id", posts_controller.getOnePost);

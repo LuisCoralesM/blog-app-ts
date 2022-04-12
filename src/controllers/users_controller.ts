@@ -5,6 +5,26 @@ const prisma = new PrismaClient();
 
 interface counts { a: Number, b: Number, c: Number };
 
+/** To GET own user route */
+async function getOwnUser(req: Request, res: Response) {
+    try{
+        const user = await prisma.user.findUnique({
+            where: {
+                id: Number(req.body.user.id)
+            },
+            include: {
+                profile: true
+            }
+        });
+        return res.status(200).json({
+            data: user
+        });
+    } catch(e) {
+        console.log(e);
+        return res.sendStatus(500);
+    }
+}
+
 /** To GET users route */
 async function getAllUser(req: Request, res: Response) {
     try{
@@ -42,8 +62,37 @@ async function getOneUser(req: Request, res: Response) {
     }
 }
 
+/** To DELETE one user route */
+async function deleteOneUser(req: Request, res: Response) {
+    try {
+        const user = await prisma.user.update({
+            where: {
+                id: Number(req.params.id)
+            },
+            data: {
+                deleted_at: new Date()
+            }
+        });
+
+        const profile = await prisma.profile.update({
+            where: {
+                id: Number(req.body.user.profile_id)
+            },
+            data: {
+                deleted_at: new Date()
+            }
+        });
+        return res.status(200).json({
+            data: {user, profile}
+        });
+    } catch(e) {
+        console.log(e);
+        return res.sendStatus(500);
+    }
+}
+
 /** To DELETE users route */
-async function deleteUser(req: Request, res: Response) {
+async function deleteOwnUser(req: Request, res: Response) {
     try {
         const user = await prisma.user.update({
             where: {
@@ -156,8 +205,10 @@ async function getABCCountUser(req: Request, res: Response) {
 export {
     getAllUser,
     getOneUser,
-    deleteUser,
+    deleteOwnUser,
     getABCCountUser,
     getByAlphaName,
-    getABCUsers
+    getABCUsers,
+    deleteOneUser,
+    getOwnUser
 }
