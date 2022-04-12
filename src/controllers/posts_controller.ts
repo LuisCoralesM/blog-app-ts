@@ -7,6 +7,9 @@ const prisma = new PrismaClient();
 async function getAllPost(req: Request, res: Response) {
     try{
         const result = await prisma.post.findMany({
+            orderBy: {
+                created_at: "desc"
+            },
             include: {
                 profile: {
                     include: {
@@ -34,7 +37,8 @@ async function postPost(req: Request, res: Response) {
                 title: req.body.title,
                 content: req.body.content,
                 profile: {
-                    connect: { id: req.body.user.profile_id }
+                    connect : {user_id: req.body.user.id}
+                    // connect: { id: req.body.user.profile_id }
                 }
             }
         });
@@ -69,7 +73,8 @@ async function putPost(req: Request, res: Response) {
     try{
         const result = await prisma.post.update({
             where: {
-                id: Number(req.params.id)
+                id: Number(req.params.id),
+                profile_id: Number(req.body.user.profile_id)
             },
             data: {
                 title: req.body.title,
@@ -90,7 +95,8 @@ async function deletePost(req: Request, res: Response) {
     try{
         const result = await prisma.post.delete({
             where: {
-                id: Number(req.params.id)
+                id: Number(req.params.id),
+                profile_id: Number(req.body.user.profile_id)
             }
         });
         return res.status(200).json({

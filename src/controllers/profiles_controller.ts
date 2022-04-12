@@ -28,10 +28,12 @@ async function getAllProfile(req: Request, res: Response) {
 
 /** To GET own profile */
 async function getOwnProfile(req: Request, res: Response) {
-    try{    
+    try{        
         const result = await prisma.profile.findFirst({
             where: {
-                id: Number(req.body.user.profile_id)
+                user: {
+                    id: Number(req.body.user.id)
+                }
             },
             include: {
                 user: {
@@ -83,7 +85,7 @@ async function putProfile(req: Request, res: Response) {
     try{
         const result = await prisma.profile.update({
             where: {
-                id: Number(req.body.user.profile_id)
+                user_id: Number(req.body.user.id)
             },
             data: {
                 bio: req.body.bio

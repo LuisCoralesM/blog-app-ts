@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "npx prisma migrate dev",
-    "migres": "npx prisma migrate reset",
+    "migrate": "prisma migrate dev",
+    "migres": "prisma migrate reset",
     "dev": "nodemon src/index.ts"
   },
   "repository": {

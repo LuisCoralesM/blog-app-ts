@@ -58,17 +58,8 @@ async function signup(req: Request, res: Response) {
             }
         });
 
-        const result = await prisma.user.update({
-            where: {
-                id: user.id
-            },
-            data: {
-                profile_id: profile.id
-            }
-        })
-
         return res.status(200).json({
-            user: result, profile: profile
+            user: user, profile: profile
         });
     } catch(e) {
         console.log(e);
