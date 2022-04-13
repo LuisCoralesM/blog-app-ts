@@ -3,7 +3,7 @@
  * npm start
  */
 
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import {PrismaClient} from "@prisma/client";
 import cors from 'cors';
 

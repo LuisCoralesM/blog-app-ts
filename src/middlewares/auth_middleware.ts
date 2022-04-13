@@ -10,6 +10,13 @@ async function verifyIfUserExists(req: Request, res: Response, next: NextFunctio
         const users = await prisma.user.findFirst({
             where: {
                 username: req.body.username
+            },
+            include: {
+                profile: {
+                    select: {
+                        id: true
+                    }
+                }
             }
         });
 
