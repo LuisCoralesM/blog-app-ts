@@ -9,21 +9,25 @@ function generateToken(payload: User, privateKey: string, signOptions?: SignOpti
     return jwt.sign(payload, privateKey, signOptions);
 }
 
-/** To POST auth route */
+/** To POST login route */
 async function login(req: Request, res: Response) {
     try{    
         if(!req.body.userExist) throw new Error;
 
         const hash = await argon2.hash(req.body.password, {type: argon2.argon2id});
+        
+        if(await argon2.verify(req.body.user.password, req.body.password))
+            req.headers.authorization = generateToken(req.body.user, "secret");
+        else 
+            throw new Error; 
 
-        if(await argon2.verify(hash, req.body.password))
-        {
-            const user: User = req.body.users;            
-            req.headers.authorization = generateToken(user, 'secret');
-        }
-        else throw new Error; 
-
-        return res.status(200).json({
+        // res.cookie("token", req.headers.authorization, {
+        //     httpOnly: true,
+        //     secure: true
+        // });        
+        
+        return res.status(201).json({
+            username: req.body.user.username,
             token: req.headers.authorization
         });
     } catch(e) {
@@ -33,11 +37,11 @@ async function login(req: Request, res: Response) {
 }
 
 
-/** To POST users route */
+/** To POST signup route */
 async function signup(req: Request, res: Response) {
     try{    
         if(req.headers.userExist)
-            throw new Error;
+            throw new Error;            
         
         const hash = await argon2.hash(req.body.password, {type: argon2.argon2id});
         
@@ -58,7 +62,7 @@ async function signup(req: Request, res: Response) {
             }
         });
 
-        return res.status(200).json({
+        return res.status(201).json({
             user: user, profile: profile
         });
     } catch(e) {
@@ -67,7 +71,18 @@ async function signup(req: Request, res: Response) {
     }
 }
 
+/** To POST auth route */
+async function logout(req: Request, res: Response) {
+    try{
+        return res.clearCookie("token").status(201).json({msg: "Logged out"});
+    } catch(e) {
+        console.log(e);
+        return res.sendStatus(401);
+    }
+}
+
 export {
     login,
-    signup
+    signup,
+    logout
 }

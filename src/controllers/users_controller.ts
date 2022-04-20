@@ -93,7 +93,7 @@ async function deleteOneUser(req: Request, res: Response) {
 
 /** To DELETE users route */
 async function deleteOwnUser(req: Request, res: Response) {
-    try {
+    try {        
         const user = await prisma.user.update({
             where: {
                 id: Number(req.body.user.id)
@@ -105,7 +105,7 @@ async function deleteOwnUser(req: Request, res: Response) {
 
         const profile = await prisma.profile.update({
             where: {
-                id: Number(req.body.user.profile_id)
+                id: Number(req.body.user.profile.id)
             },
             data: {
                 deleted_at: new Date()

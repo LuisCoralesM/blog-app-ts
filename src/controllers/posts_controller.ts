@@ -31,7 +31,7 @@ async function getAllPost(req: Request, res: Response) {
 
 /** To POST posts route */
 async function postPost(req: Request, res: Response) {
-    try {        
+    try {
         const result = await prisma.post.create({
             data: {
                 title: req.body.title,

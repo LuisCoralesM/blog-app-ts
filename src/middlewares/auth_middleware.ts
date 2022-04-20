@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 const prisma = new PrismaClient();
 
 /** Verify if the user already exists */
 async function verifyIfUserExists(req: Request, res: Response, next: NextFunction) {
     try {
-        const users = await prisma.user.findFirst({
+        const user = await prisma.user.findUnique({
             where: {
                 username: req.body.username
             },
@@ -20,22 +21,28 @@ async function verifyIfUserExists(req: Request, res: Response, next: NextFunctio
             }
         });
 
-        if(users === null) {
+        if(user === null) {
             req.body.userExist = false; 
         }
         else {
             req.body.userExist = true;
-            req.body.users = users;
+            req.body.user = user;
         }
 
         next();
     } catch(e) {
-        return res.sendStatus(401);
+        console.log(e);
+
+        return res.sendStatus(403);
     }
 };
 
 function verifyToken(req: Request, res: Response, next: NextFunction) {
     try {
+        console.log(req.cookies["token"]);
+        console.log(req.cookies);
+        console.log(req.signedCookies);
+        
         const authHeader = req.headers.authorization;
         const token = authHeader && authHeader.split(' ')[1];
 
@@ -44,10 +51,12 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
         jwt.verify(token, 'secret', (err, user) => {
             if (err) throw err;
             req.body.user = user;
-        })
+        });
         
         next();
     } catch(e) {
+        console.log(e);
+        
         return res.sendStatus(401);
     }
 }
