@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 
 const prisma = new PrismaClient();
 
@@ -39,10 +38,6 @@ async function verifyIfUserExists(req: Request, res: Response, next: NextFunctio
 
 function verifyToken(req: Request, res: Response, next: NextFunction) {
     try {
-        console.log(req.cookies["token"]);
-        console.log(req.cookies);
-        console.log(req.signedCookies);
-        
         const authHeader = req.headers.authorization;
         const token = authHeader && authHeader.split(' ')[1];
 
