@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { users_controller, posts_controller, profiles_controller } from "../controllers";
+import {
+  users_controller,
+  posts_controller,
+  profiles_controller,
+} from "../controllers";
 
 const router = Router();
 
@@ -17,7 +21,7 @@ router.delete("/users/", users_controller.deleteOwnUser); // Delete by current u
 // Profiles routes
 router.get("/profiles/all", profiles_controller.getAllProfile);
 router.get("/profiles/:id", profiles_controller.getOneProfile);
-router.get("/profiles", profiles_controller.getOwnProfile)
+router.get("/profiles", profiles_controller.getOwnProfile);
 router.put("/profiles/", profiles_controller.putProfile); // Own profile
 
 // Posts routes
