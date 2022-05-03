@@ -8,8 +8,12 @@ import {
 const router = Router();
 
 // Users routes TESTING ONLY
+// router.get("/users/alpha", users_controller.getByAlphaNameDB);
 router.get("/users/alpha", users_controller.getByAlphaName);
+
+// router.get("/users/abc", users_controller.getABCUsersDB);
 router.get("/users/abc", users_controller.getABCUsers);
+
 router.get("/users/abccount", users_controller.getABCCountUser);
 
 router.get("/users/all", users_controller.getAllUser); // Admin

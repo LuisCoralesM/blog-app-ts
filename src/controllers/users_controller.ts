@@ -10,7 +10,7 @@ interface counts {
 }
 
 /** To GET own user route */
-async function getOwnUser(req: Request, res: Response) {
+export async function getOwnUser(req: Request, res: Response) {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -30,15 +30,10 @@ async function getOwnUser(req: Request, res: Response) {
 }
 
 /** To GET users route */
-async function getAllUser(req: Request, res: Response) {
+export async function getAllUser(req: Request, res: Response) {
   try {
-    const user = await prisma.user.findMany({
-      include: {
-        profile: true,
-      },
-    });
     return res.status(200).json({
-      data: user,
+      data: await findAllUsers(),
     });
   } catch (e) {
     console.log(e);
@@ -47,7 +42,7 @@ async function getAllUser(req: Request, res: Response) {
 }
 
 /** To GET users by id route */
-async function getOneUser(req: Request, res: Response) {
+export async function getOneUser(req: Request, res: Response) {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -67,7 +62,7 @@ async function getOneUser(req: Request, res: Response) {
 }
 
 /** To DELETE one user route */
-async function deleteOneUser(req: Request, res: Response) {
+export async function deleteOneUser(req: Request, res: Response) {
   try {
     const user = await prisma.user.update({
       where: {
@@ -96,7 +91,7 @@ async function deleteOneUser(req: Request, res: Response) {
 }
 
 /** To DELETE users route */
-async function deleteOwnUser(req: Request, res: Response) {
+export async function deleteOwnUser(req: Request, res: Response) {
   try {
     const user = await prisma.user.update({
       where: {
@@ -125,7 +120,7 @@ async function deleteOwnUser(req: Request, res: Response) {
 }
 
 // Listing
-async function getByAlphaName(req: Request, res: Response) {
+export async function getByAlphaNameDB(req: Request, res: Response) {
   try {
     const users = await prisma.user.findMany({
       orderBy: {
@@ -146,7 +141,57 @@ async function getByAlphaName(req: Request, res: Response) {
   }
 }
 
-async function findABCNames(): Promise<User[]> {
+export async function findAllUsers(): Promise<User[]> {
+  try {
+    return await prisma.user.findMany({
+      include: {
+        profile: true,
+      },
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+export async function getByAlphaName(req: Request, res: Response) {
+  try {
+    return res.status(200).json(sortByAlphaName(await findAllUsers()));
+  } catch (e) {
+    return res.sendStatus(500);
+  }
+}
+
+export function sortByAlphaName(users: User[]) {
+  return users
+    .map((user) => ({
+      first_name: user.first_name,
+      last_name: user.last_name.toUpperCase(),
+    }))
+    .sort((a, b) => {
+      if (a.first_name < b.first_name) return -1;
+      if (a.first_name > b.first_name) return 1;
+      return 0;
+    });
+}
+
+export function filterABCNames(users: User[]) {
+  return users.filter(
+    (user) =>
+      user.first_name.charAt(0).toLowerCase() === "a" ||
+      user.first_name.charAt(0).toLowerCase() === "b" ||
+      user.first_name.charAt(0).toLowerCase() === "c"
+  );
+}
+
+export async function getABCUsers(req: Request, res: Response) {
+  try {
+    return res.status(200).json(filterABCNames(await findABCNames()));
+  } catch (e) {
+    return res.sendStatus(500);
+  }
+}
+
+export async function findABCNames(): Promise<User[]> {
   try {
     return await prisma.user.findMany({
       where: {
@@ -177,7 +222,7 @@ async function findABCNames(): Promise<User[]> {
   }
 }
 
-function countABCNames(users: User[]): counts {
+export function countABCNames(users: User[]): counts {
   const counts = { a: 0, b: 0, c: 0 };
   users.forEach((user) => {
     user.first_name.charAt(0).toLowerCase() === "a"
@@ -191,32 +236,20 @@ function countABCNames(users: User[]): counts {
   return counts;
 }
 
-async function getABCUsers(req: Request, res: Response) {
+export async function getABCUsersDB(req: Request, res: Response) {
   try {
-    const users = await findABCNames();
     return res.status(200).json({
-      data: users,
+      data: await findABCNames(),
     });
   } catch (e) {
     return res.sendStatus(500);
   }
 }
 
-async function getABCCountUser(req: Request, res: Response) {
+export async function getABCCountUser(req: Request, res: Response) {
   try {
     return res.status(200).json(countABCNames(await findABCNames()));
   } catch (e) {
     return res.sendStatus(500);
   }
 }
-
-export {
-  getAllUser,
-  getOneUser,
-  deleteOwnUser,
-  getABCCountUser,
-  getByAlphaName,
-  getABCUsers,
-  deleteOneUser,
-  getOwnUser,
-};

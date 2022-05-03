@@ -6,8 +6,9 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
-    "test:coverage": "jest --coverage",
     "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "migrate": "prisma migrate dev",
     "migres": "prisma migrate reset",
     "dev": "nodemon src/index.ts"
