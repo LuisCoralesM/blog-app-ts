@@ -12,7 +12,7 @@ function generateToken(
 ): string {
   return jwt.sign(payload, privateKey, signOptions);
 }
-//ADSSADASDASASD
+
 /** To POST login route */
 async function login(req: Request, res: Response) {
   try {
