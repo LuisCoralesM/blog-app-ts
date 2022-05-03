@@ -7,5 +7,6 @@ const router = Router();
 // Users routes
 router.post("/signup", verifyIfUserExists, auth_controller.signup);
 router.post("/login", verifyIfUserExists, auth_controller.login);
+router.post("/logout", auth_controller.logout);
 
 export default router;
