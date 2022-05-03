@@ -8,9 +8,9 @@ describe("users controllers", () => {
   const { MOCK_TOSORT } = require("./mocks/MOCK_TOSORT");
   const { MOCK_ABD } = require("./mocks/MOCK_ABD");
 
-  const { sortByAlphaName } = require("../src/controllers/users_controller");
-  const { countABCNames } = require("../src/controllers/users_controller");
-  const { filterABCNames } = require("../src/controllers/users_controller");
+  const { sortByAlphaName } = require("../src/services/users_services");
+  const { countABCNames } = require("../src/services/users_services");
+  const { filterABCNames } = require("../src/services/users_services");
 
   test("countABCNames: returns true when data has 1 A names, 1 B names, 1 C names", () => {
     const obj = countABCNames(MOCK_ABC);

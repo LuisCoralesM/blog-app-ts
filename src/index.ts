@@ -2,7 +2,6 @@
  * npx ts-node src/index.ts
  * npm start
  */
-
 import express, { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
@@ -24,8 +23,7 @@ app.use(express.json());
 
 app.get("/status", async (req: Request, res: Response) => {
   try {
-    const count = await prisma.user.count();
-    return res.status(200).json({ count });
+    return res.status(200).json({ count: await prisma.user.count() });
   } catch (error) {
     return res.json({ message: error });
   }
