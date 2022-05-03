@@ -25,9 +25,9 @@ router.put("/profiles/", profiles_controller.putProfile); // Own profile
 
 // Posts routes
 router.get("/posts/all", posts_controller.getAllPost);
-router.get("/posts/user/:id", posts_controller.getUsersPost);
-router.get("/posts/:id", posts_controller.getOnePost);
-router.get("/posts", posts_controller.getOwnPost); // Own posts
+router.get("/posts/user/:username", posts_controller.getUsersPost); // by username
+router.get("/posts/:id", posts_controller.getOnePost); // by id
+router.get("/posts", posts_controller.getOwnPosts); // Own posts
 router.post("/posts", posts_controller.postPost);
 router.put("/posts/:id", posts_controller.putPost);
 router.delete("/posts/:id", posts_controller.deletePost);
