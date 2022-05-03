@@ -5,6 +5,8 @@ import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+//IM ADDING CHANGES TO TEST
+
 function generateToken(
   payload: User,
   privateKey: string,
