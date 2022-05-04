@@ -1,7 +1,4 @@
 describe("users controllers", () => {
-  const fetch = require("node-fetch");
-  const url = "http://localhost:5500";
-
   const { MOCK_AB } = require("./mocks/MOCK_AB");
   const { MOCK_ABC } = require("./mocks/MOCK_ABC");
   const { MOCK_NOABC } = require("./mocks/MOCK_NOABC");
